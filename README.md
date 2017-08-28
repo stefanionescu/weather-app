@@ -1,83 +1,18 @@
 MVP Clean Architecture
 ==
 
-[![Build Status](https://travis-ci.org/glomadrian/MvpCleanArchitecture.svg?branch=master)](https://travis-ci.org/glomadrian/MvpCleanArchitecture)
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MVP%20Clean%20Architecture-brightgreen.svg)](https://android-arsenal.com/details/3/1210)
+a) This project was made according to Uncle Bob's Clean Architecture.
 
+The code was developed in Android Studio, v.2.2. Make sure that your gradle version is 2.14.1 and that you have all the APIs from 16 to 25 installed.
+Also, in your SDK Manager, make sure that you have the latest Support Repository installed (47 when I checked).
 
-A sample project using Clean architecture and MVP
+You should select "Open another Android Studio project" from Android Studio's main screen. If the import is successful, you should
+be able to run the project by selecting "Run" -> "Run App" from the top bar.
 
+b) A couple of improvements for the project:
 
-## Motivation
-
-Auto learning and make an example of Clean Architecture with MVP are the principal motivation for this app
-
-Inspired by the project [EffectiveAndroidUI](https://github.com/pedrovgs/EffectiveAndroidUI) by @pedrovgs that I fully recommend
-
-
-Clean architecture
-------------
-
-The Clean architecture search to make independent our code from data sources, UI, Frameworks, etc.
-
-Make more testable the code
-
-MVP
-------------
-
-Model view presenter is one of the most used architectural pattern, in Android this pattern can be used with a few limitations, Activities and Fragments have more responsibility than a simple view, anywhere is a wonderfull pattern to be used in Android applications.
-
-Apllication structure
-------------
-
-
-//TODO
-
-
-External Libs
-------------
-
-This project use this external libs
-
-* [Retrofit ](http://square.github.io/dagger/)
-* [Dagger](http://square.github.io/retrofit/)
-* [ButterKnife](http://jakewharton.github.io/butterknife/)
-* [Parceler](https://github.com/johncarl81/parceler)
-* [Picasso](http://square.github.io/picasso/)
-
-
-Screenshots
-------------
-![screenshot](./img/screenshot_1.png "Screenshot 1")
-
-![screenshot](./img/screenshot_2.png "Screenshot 2")
-
-![screenshot](./img/screenshot_3.png "Screenshot 3")
-
-
-Developer By
-------------
-
-
-Adrián García Lomas
-
-* [Twitter](https://twitter.com/glomadrian)
-* [LinkedIn](https://es.linkedin.com/in/glomadrian )
-
-
-License
--------
-
-Copyright 2014 Adrián García Lomas
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+- There can be a search bar for the user to get the forecasts for multiple cities, not just one
+- The user should be able to switch from Celsius to Fahrenheit and vice-versa (so the app doesn't use Kelvin)
+- A weather widget would be helpful; the widget will get new weather info once per hour
+- The possibility to compare the weather between 2 cities
+- Add tests
