@@ -104,8 +104,7 @@ public class ForecastListPresenterImp extends BasePresenter implements ForecastL
             }
         });
     }
-
-
+    
     private List<Model> convertToModelViewList(List<Forecast> marvelCharacters) {
 
 
