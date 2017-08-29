@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Observable to character selected, this observable call all observer subscribed when a
- * character is selected
- *
  * @author stefan
  */
 public class ForecastSelectedObservable implements Observable<ForecastSelectedObserver> {
@@ -19,13 +16,13 @@ public class ForecastSelectedObservable implements Observable<ForecastSelectedOb
         forecastSelectedObservers = new ArrayList<ForecastSelectedObserver>();
     }
 
-
     @Override
     public void register(ForecastSelectedObserver observer) {
-        //To avoid duplicated register
+
         if (!forecastSelectedObservers.contains(observer)) {
             forecastSelectedObservers.add(observer);
         }
+        
     }
 
     @Override

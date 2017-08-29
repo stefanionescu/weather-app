@@ -13,11 +13,14 @@ import com.weather.app.testapp.domain.repository.api.model.Weather;
 import com.weather.app.testapp.domain.repository.api.model.Wind;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(JUnit4.class)
 public class ModelTest {
@@ -101,6 +104,37 @@ public class ModelTest {
 
     }
 
-    
+    @Test
+    public void testMain(){
+
+        assertEquals(54, (int) main.getHumidity());
+        assertEquals(45.6, main.getPressure(), 0);
+        assertEquals(294.23, main.getTemp(), 0);
+        assertEquals(294.23, main.getTempMax(), 0);
+        assertEquals(294.23, main.getTempMin(), 0);
+        assertEquals(23.2, main.getSeaLevel(), 0);
+        assertEquals(1.92, main.getTempKf(), 0);
+        assertEquals(27.9, main.getGrndLevel(), 0);
+
+    }
+
+    @Test
+    public void testWeather(){
+
+        assertEquals("Clouds", weather.getMain());
+        assertEquals("Very cloudy", weather.getDescription());
+        assertEquals("https://www.someicon.com", weather.getIcon());
+        assertEquals(1, weather.getId(), 0);
+
+    }
+
+    @Test
+    public void testWind(){
+
+        assertEquals(12.2, wind.getDeg(), 0);
+        assertEquals(25.7, wind.getSpeed(), 0);
+
+    }
+
 
 }
