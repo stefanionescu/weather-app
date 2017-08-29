@@ -104,9 +104,8 @@ public class ForecastListPresenterImp extends BasePresenter implements ForecastL
             }
         });
     }
-    
-    private List<Model> convertToModelViewList(List<Forecast> marvelCharacters) {
 
+    private List<Model> convertToModelViewList(List<Forecast> marvelCharacters) {
 
         List<Model> modelList = new ArrayList<Model>();
 
@@ -116,7 +115,5 @@ public class ForecastListPresenterImp extends BasePresenter implements ForecastL
 
         return modelList;
     }
-
-
 
 }

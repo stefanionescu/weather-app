@@ -40,6 +40,6 @@ public class ForecastInfoPresenterImp implements ForecastInfoPresenter {
     public void onCharacter(Forecast forecast) {
         //Parse the character to characterInfoModelView and call the view to show
         ForecastInfoViewModel forecastInfoViewModel = new ForecastInfoViewModel(forecast);
-        modelInfoView.showCharacterInfo(forecastInfoViewModel);
+        modelInfoView.showForecastInfo(forecastInfoViewModel);
     }
 }

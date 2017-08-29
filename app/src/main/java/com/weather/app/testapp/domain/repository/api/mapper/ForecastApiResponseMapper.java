@@ -34,7 +34,7 @@ public class ForecastApiResponseMapper implements ResponseMapper<ForecastList> {
 
         for (OneForecast oneforecast : forecasts) {
             Log.i("mapper", "Processing OneForecast...");
-            marvelCharacters.add(createMarvelCharacterFromResponseCharacter(oneforecast));
+            marvelCharacters.add(createForecastFromResponseObject(oneforecast));
         }
 
         Log.i("mapper", String.valueOf(marvelCharacters.size()));
@@ -43,7 +43,7 @@ public class ForecastApiResponseMapper implements ResponseMapper<ForecastList> {
     }
 
 
-    private Forecast createMarvelCharacterFromResponseCharacter(OneForecast oneForecast) {
+    private Forecast createForecastFromResponseObject(OneForecast oneForecast) {
 
         Forecast forecast = new Forecast();
         forecast.setName("London - " + oneForecast.getDtTxt());

@@ -69,13 +69,13 @@ public class ForecastInfoFragment extends BaseFragment implements ModelInfoView 
     }
 
     @Override
-    public void showCharacterInfo(ForecastInfoViewModel forecastInfoViewModel) {
+    public void showForecastInfo(ForecastInfoViewModel forecastInfoViewModel) {
 
         infoDescription.setText("Temperature: " + forecastInfoViewModel.getTemperature() + "\n\n" +
                                 "Main Weather: " + forecastInfoViewModel.getMainWeather() + "\n\n" +
                                 "Atmospheric Pressure: " + forecastInfoViewModel.getPressure() + "\n\n" +
                                 "Humidity: " + forecastInfoViewModel.getHumidity() + "\n\n" +
-                                "Wind Speed: " + forecastInfoViewModel.getWindSpeed() + "km/h");
+                                "Wind Speed: " + forecastInfoViewModel.getWindSpeed() + " km/h");
 
         infoTitle.setText(forecastInfoViewModel.getInfoTitle());
 

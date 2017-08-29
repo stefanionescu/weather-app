@@ -7,5 +7,5 @@ import com.weather.app.testapp.ui.viewmodel.ForecastInfoViewModel;
  */
 public interface ModelInfoView extends View {
 
-    void showCharacterInfo(ForecastInfoViewModel forecastInfoViewModel);
+    void showForecastInfo(ForecastInfoViewModel forecastInfoViewModel);
 }

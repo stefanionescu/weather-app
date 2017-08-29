@@ -1,8 +1,6 @@
 package com.weather.app.testapp.ui.viewmodel;
 
 /**
- * Custom model for the view CharacterInfoView
- *
  * @author stefan
  */
 public abstract class ModelInfo {
