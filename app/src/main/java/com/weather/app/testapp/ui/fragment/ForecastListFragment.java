@@ -82,13 +82,13 @@ public class ForecastListFragment extends BaseFragment implements ForecastListVi
         super.onSaveInstanceState(outState);
 
         //Get the actual state of the characters
-        ListOfForecasts marvelCharacters = characterCollectionPresenter.getParcelableCollection();
+        ListOfForecasts londonForecasts = characterCollectionPresenter.getParcelableCollection();
 
         //Parcel the object to be saved in the bundle
-        Parcelable marvelCharactersWrapped = Parcels.wrap(marvelCharacters);
+        Parcelable londonForecastsWrapped = Parcels.wrap(londonForecasts);
 
         //Save the parcelable
-        outState.putParcelable(EXTRA_CHARACTER_COLLECTION, marvelCharactersWrapped);
+        outState.putParcelable(EXTRA_CHARACTER_COLLECTION, londonForecastsWrapped);
     }
 
     @Override
@@ -98,9 +98,9 @@ public class ForecastListFragment extends BaseFragment implements ForecastListVi
         if (savedInstanceState != null) {
             Log.i(LogUtils.generateTag(this), "onViewStateRestored");
             //Get parcelable from bundle
-            Parcelable marvelCharactersWrapped = savedInstanceState.getParcelable(EXTRA_CHARACTER_COLLECTION);
-            ListOfForecasts marvelCharacters = Parcels.unwrap(marvelCharactersWrapped);
-            characterCollectionPresenter.restoreParcelableCollection(marvelCharacters);
+            Parcelable londonForecastsWrapped = savedInstanceState.getParcelable(EXTRA_CHARACTER_COLLECTION);
+            ListOfForecasts londonForecasts = Parcels.unwrap(londonForecastsWrapped);
+            characterCollectionPresenter.restoreParcelableCollection(londonForecasts);
         }
     }
 

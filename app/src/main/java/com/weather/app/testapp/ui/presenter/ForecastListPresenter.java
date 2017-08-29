@@ -10,7 +10,7 @@ public interface ForecastListPresenter extends Presenter<ForecastListView> {
 
     ListOfForecasts getParcelableCollection();
 
-    void restoreParcelableCollection(ListOfForecasts marvelCharacters);
+    void restoreParcelableCollection(ListOfForecasts londonForecasts);
 
     void onforecastSelected(int position);
 

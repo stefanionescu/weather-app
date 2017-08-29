@@ -21,7 +21,7 @@ import dagger.Provides;
 public class InteractorModule {
 
     @Provides
-    public GetForecasts provideGetMarvelCharactersLimit(InteractorExecutor interactorExecutor,
+    public GetForecasts provideGetlondonForecastsLimit(InteractorExecutor interactorExecutor,
                                                         MainThreadExecutor mainThreadExecutor,
                                                         @Named("production_api") ForecastRepository forecastRepository) {
 

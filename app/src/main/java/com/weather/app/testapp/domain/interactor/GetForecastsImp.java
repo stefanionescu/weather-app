@@ -38,7 +38,7 @@ public class GetForecastsImp extends AbstractInteractor implements GetForecasts 
             });
 
         } catch (GetForecastException e) {
-            Log.e(LogUtils.generateTag(this), "Error on GerMarvelCharacters interactor");
+            Log.e(LogUtils.generateTag(this), "Error on GerlondonForecasts interactor");
             getMainThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {

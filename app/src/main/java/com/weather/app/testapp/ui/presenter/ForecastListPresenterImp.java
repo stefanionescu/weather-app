@@ -72,15 +72,15 @@ public class ForecastListPresenterImp extends BasePresenter implements ForecastL
     }
 
     @Override
-    public void restoreParcelableCollection(ListOfForecasts marvelCharacters) {
-        this.marvelCharacterCollection = marvelCharacters;
-        modelCollectionView.add(convertToModelViewList(marvelCharacters.getForecasts()));
+    public void restoreParcelableCollection(ListOfForecasts londonForecasts) {
+        this.marvelCharacterCollection = londonForecasts;
+        modelCollectionView.add(convertToModelViewList(londonForecasts.getForecasts()));
     }
 
     @Override
     public void onforecastSelected(int position) {
-        Collection<Forecast> marvelCharacters = marvelCharacterCollection.getForecasts();
-        Forecast marvelCharacter = (Forecast) marvelCharacters.toArray()[position];
+        Collection<Forecast> londonForecasts = marvelCharacterCollection.getForecasts();
+        Forecast marvelCharacter = (Forecast) londonForecasts.toArray()[position];
         forecastSelectedObservable.notifyObservers(marvelCharacter);
     }
 
@@ -90,10 +90,10 @@ public class ForecastListPresenterImp extends BasePresenter implements ForecastL
 
         getForecasts.execute(new GetForecasts.Callback() {
             @Override
-            public void onMarvelCharacterList(List<Forecast> marvelCharacters) {
+            public void onMarvelCharacterList(List<Forecast> londonForecasts) {
 
-                marvelCharacterCollection.addAll(marvelCharacters);
-                modelCollectionView.add(convertToModelViewList(marvelCharacters));
+                marvelCharacterCollection.addAll(londonForecasts);
+                modelCollectionView.add(convertToModelViewList(londonForecasts));
 
             }
 
@@ -105,11 +105,11 @@ public class ForecastListPresenterImp extends BasePresenter implements ForecastL
         });
     }
 
-    private List<Model> convertToModelViewList(List<Forecast> marvelCharacters) {
+    private List<Model> convertToModelViewList(List<Forecast> londonForecasts) {
 
         List<Model> modelList = new ArrayList<Model>();
 
-        for (Forecast marvelCharacter : marvelCharacters) {
+        for (Forecast marvelCharacter : londonForecasts) {
             modelList.add(new ForecastViewModel(marvelCharacter));
         }
 
