@@ -97,6 +97,11 @@ public class ForecastMapperTest {
         londonForecasts = mapper.mapResponse(forecastList);
 
         assertEquals(londonForecasts.get(0).getName(), "London - 2017-30-1 15:00:00");
+        assertEquals(londonForecasts.get(0).getTemperature(), "294.23 Kelvin");
+        assertEquals(londonForecasts.get(0).getPressure(), "45.6 hPa");
+        assertEquals(londonForecasts.get(0).getHumidity(), "54%");
+        assertEquals(londonForecasts.get(0).getMain(), "Clouds (Very cloudy)");
+        assertEquals(londonForecasts.get(0).getWind_speed(), "25.7");
 
     }
 
