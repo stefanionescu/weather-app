@@ -6,7 +6,6 @@ import com.weather.app.testapp.domain.LogUtils;
 import com.weather.app.testapp.domain.interactor.GetForecasts;
 import com.weather.app.testapp.domain.model.Forecast;
 import com.weather.app.testapp.domain.model.ListOfForecasts;
-import com.weather.app.testapp.ui.reactive.ForecastSelectedObservable;
 import com.weather.app.testapp.ui.view.ForecastListView;
 import com.weather.app.testapp.ui.viewmodel.ForecastViewModel;
 import com.weather.app.testapp.ui.viewmodel.Model;

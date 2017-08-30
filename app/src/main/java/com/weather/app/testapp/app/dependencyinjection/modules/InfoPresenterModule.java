@@ -1,15 +1,9 @@
 package com.weather.app.testapp.app.dependencyinjection.modules;
 
 import com.weather.app.testapp.app.dependencyinjection.scopes.ForecastInfoScope;
-import com.weather.app.testapp.app.dependencyinjection.scopes.ForecastListScope;
-import com.weather.app.testapp.domain.interactor.GetForecasts;
 import com.weather.app.testapp.ui.presenter.ForecastInfoPresenter;
 import com.weather.app.testapp.ui.presenter.ForecastInfoPresenterImp;
-import com.weather.app.testapp.ui.presenter.ForecastListPresenter;
-import com.weather.app.testapp.ui.presenter.ForecastListPresenterImp;
-import com.weather.app.testapp.ui.reactive.ForecastSelectedObservable;
-
-import javax.inject.Singleton;
+import com.weather.app.testapp.ui.view.ModelInfoView;
 
 import dagger.Module;
 import dagger.Provides;
@@ -20,10 +14,18 @@ import dagger.Provides;
 @Module
 public class InfoPresenterModule {
 
+    ModelInfoView modelInfoView;
+
+    public InfoPresenterModule(ModelInfoView modelInfoView){
+
+        this.modelInfoView = modelInfoView;
+
+    }
+
     @Provides
     @ForecastInfoScope
     public ForecastInfoPresenter provideCharacterInfoPresenter() {
-        return new ForecastInfoPresenterImp();
+        return new ForecastInfoPresenterImp(modelInfoView);
     }
 
 }

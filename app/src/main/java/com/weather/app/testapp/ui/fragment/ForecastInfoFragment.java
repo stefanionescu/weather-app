@@ -51,6 +51,7 @@ public class ForecastInfoFragment extends Fragment implements ModelInfoView {
         ForecastInfoFragment forecastInfoFragment = new ForecastInfoFragment();
         forecastInfoFragment.setArguments(args);
         return forecastInfoFragment;
+
     }
 
     @Override
@@ -61,7 +62,7 @@ public class ForecastInfoFragment extends Fragment implements ModelInfoView {
         ButterKnife.bind(this, view);
 
         DaggerForecastInfoComponent.builder()
-                .infoPresenterModule(new InfoPresenterModule())
+                .infoPresenterModule(new InfoPresenterModule(this))
                 .build()
                 .inject(this);
 
@@ -75,12 +76,9 @@ public class ForecastInfoFragment extends Fragment implements ModelInfoView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        forecastInfoPresenter.onViewCreate();
-        forecastInfoPresenter.setView(this);
-
         //Get character info
         if (getArguments() != null) {
-            Forecast forecast = getMarvelCharacterFromArgs();
+            Forecast forecast = getForecastFromArgs();
             forecastInfoPresenter.onCharacter(forecast);
         }
 
@@ -99,7 +97,7 @@ public class ForecastInfoFragment extends Fragment implements ModelInfoView {
 
     }
 
-    private Forecast getMarvelCharacterFromArgs() {
+    private Forecast getForecastFromArgs() {
         Parcelable marvelCharacterParcelable = getArguments().getParcelable(KEY_CHARACTER);
         return Parcels.unwrap(marvelCharacterParcelable);
     }

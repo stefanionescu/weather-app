@@ -19,6 +19,7 @@ import dagger.Provides;
 public class InteractorModule {
 
     @Provides
+    @ForecastListScope
     public GetForecasts provideGetlondonForecastsLimit(@Named("interactor_exec") InteractorExecutor interactorExecutor,
                                                        @Named("main_exec") MainThreadExecutor mainThreadExecutor,
                                                        @Named("production_api") ForecastRepository forecastRepository) {

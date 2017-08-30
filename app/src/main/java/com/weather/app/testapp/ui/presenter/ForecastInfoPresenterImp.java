@@ -4,12 +4,21 @@ import com.weather.app.testapp.domain.model.Forecast;
 import com.weather.app.testapp.ui.view.ModelInfoView;
 import com.weather.app.testapp.ui.viewmodel.ForecastInfoViewModel;
 
+import javax.inject.Inject;
+
 /**
  * @author stefan
  */
 public class ForecastInfoPresenterImp implements ForecastInfoPresenter {
 
     ModelInfoView modelInfoView;
+
+    @Inject
+    public ForecastInfoPresenterImp(ModelInfoView modelInfoView) {
+
+        this.modelInfoView = modelInfoView;
+
+    }
 
     @Override
     public void initialize() {
@@ -33,7 +42,7 @@ public class ForecastInfoPresenterImp implements ForecastInfoPresenter {
 
     @Override
     public void setView(ModelInfoView view) {
-        this.modelInfoView = view;
+
     }
 
     @Override
