@@ -1,6 +1,5 @@
 package com.weather.app.testapp.executor;
 
-
 import android.os.Handler;
 import android.os.Looper;
 

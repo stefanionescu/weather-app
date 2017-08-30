@@ -13,22 +13,21 @@ import java.util.List;
 
 public class GetForecastsImp extends AbstractInteractor implements GetForecasts {
 
-    private ForecastRepository marvelRepository;
+    private ForecastRepository forecastRepository;
     private Callback callback;
 
     public GetForecastsImp(InteractorExecutor interactorExecutor,
                            MainThreadExecutor mainThreadExecutor,
-                           ForecastRepository marvelRepository) {
+                           ForecastRepository forecastRepository) {
         super(interactorExecutor, mainThreadExecutor);
-        this.marvelRepository = marvelRepository;
+        this.forecastRepository = forecastRepository;
     }
-
 
     @Override
     public void run() {
 
         try {
-            final List<Forecast> forecasts = marvelRepository.getForecastsCollection();
+            final List<Forecast> forecasts = forecastRepository.getForecastsCollection();
 
             getMainThreadExecutor().execute(new Runnable() {
                 @Override
@@ -38,7 +37,7 @@ public class GetForecastsImp extends AbstractInteractor implements GetForecasts 
             });
 
         } catch (GetForecastException e) {
-            Log.e(LogUtils.generateTag(this), "Error on GerlondonForecasts interactor");
+            Log.e(LogUtils.generateTag(this), "Error on GetLondonForecasts interactor");
             getMainThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {

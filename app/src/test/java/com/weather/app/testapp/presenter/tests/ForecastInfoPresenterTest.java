@@ -1,6 +1,5 @@
 package com.weather.app.testapp.presenter.tests;
 
-import com.weather.app.testapp.domain.model.Forecast;
 import com.weather.app.testapp.ui.presenter.ForecastInfoPresenterImp;
 import com.weather.app.testapp.ui.view.ModelInfoView;
 import com.weather.app.testapp.ui.viewmodel.ForecastInfoViewModel;
@@ -19,11 +18,9 @@ public class ForecastInfoPresenterTest {
 
     @Mock
     ModelInfoView modelInfoView;
-
-    private ForecastInfoPresenterImp forecastInfoPresenterImp;
-
     @Mock
     ForecastInfoViewModel forecastInfoViewModel;
+    private ForecastInfoPresenterImp forecastInfoPresenterImp;
 
     @Before
     public void setUp() throws Exception {
