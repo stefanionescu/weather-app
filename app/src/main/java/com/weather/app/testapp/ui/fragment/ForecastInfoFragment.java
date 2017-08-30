@@ -78,8 +78,13 @@ public class ForecastInfoFragment extends Fragment implements ModelInfoView {
 
         //Get character info
         if (getArguments() != null) {
+
             Forecast forecast = getForecastFromArgs();
-            forecastInfoPresenter.onCharacter(forecast);
+
+            ForecastInfoViewModel forecastInfoViewModel = new ForecastInfoViewModel(forecast);
+
+            forecastInfoPresenter.onForecast(forecastInfoViewModel);
+
         }
 
     }
