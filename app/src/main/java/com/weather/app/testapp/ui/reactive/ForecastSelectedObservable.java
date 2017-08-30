@@ -5,6 +5,8 @@ import com.weather.app.testapp.domain.model.Forecast;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * @author stefan
  */
@@ -12,6 +14,7 @@ public class ForecastSelectedObservable implements Observable<ForecastSelectedOb
 
     List<ForecastSelectedObserver> forecastSelectedObservers;
 
+    @Inject
     public ForecastSelectedObservable() {
         forecastSelectedObservers = new ArrayList<ForecastSelectedObserver>();
     }
@@ -30,10 +33,4 @@ public class ForecastSelectedObservable implements Observable<ForecastSelectedOb
         forecastSelectedObservers.remove(observer);
     }
 
-
-    public void notifyObservers(Forecast forecast) {
-        for (ForecastSelectedObserver forecastSelectedObserver : forecastSelectedObservers) {
-            forecastSelectedObserver.forecastSelected(forecast);
-        }
-    }
 }

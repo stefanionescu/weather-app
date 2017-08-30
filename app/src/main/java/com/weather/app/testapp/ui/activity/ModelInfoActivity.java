@@ -2,9 +2,9 @@ package com.weather.app.testapp.ui.activity;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v7.app.AppCompatActivity;
 
 import com.weather.app.testapp.R;
-import com.weather.app.testapp.app.BaseActivity;
 import com.weather.app.testapp.domain.model.Forecast;
 import com.weather.app.testapp.ui.fragment.ForecastInfoFragment;
 
@@ -15,22 +15,25 @@ import static com.weather.app.testapp.ui.fragment.ForecastInfoFragment.newInstan
 /**
  * @author stefan
  */
-public class ModelInfoActivity extends BaseActivity {
+public class ModelInfoActivity extends AppCompatActivity {
 
     public static final String KEY_CHARACTER = "forecast";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.model_info_activity);
 
         addInfoFragment();
+
     }
 
     public void addInfoFragment() {
 
-        Parcelable marvelCharacterParcelable = getIntent().getExtras().getParcelable(KEY_CHARACTER);
-        Forecast forecast = Parcels.unwrap(marvelCharacterParcelable);
+        Parcelable forecastParcelable = getIntent().getExtras().getParcelable(KEY_CHARACTER);
+        Forecast forecast = Parcels.unwrap(forecastParcelable);
 
         ForecastInfoFragment forecastInfoFragment = newInstance(forecast);
 

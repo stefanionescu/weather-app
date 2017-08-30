@@ -1,5 +1,6 @@
 package com.weather.app.testapp.ui.fragment;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -9,7 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.weather.app.testapp.R;
-import com.weather.app.testapp.app.BaseFragment;
+import com.weather.app.testapp.app.dependencyinjection.modules.InfoPresenterModule;
+import com.weather.app.testapp.app.dependencyinjection.components.DaggerForecastInfoComponent;
 import com.weather.app.testapp.domain.model.Forecast;
 import com.weather.app.testapp.ui.presenter.ForecastInfoPresenter;
 import com.weather.app.testapp.ui.view.ModelInfoView;
@@ -20,18 +22,21 @@ import org.parceler.Parcels;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * @author stefan
  */
-public class ForecastInfoFragment extends BaseFragment implements ModelInfoView {
+public class ForecastInfoFragment extends Fragment implements ModelInfoView {
 
     public static final String KEY_CHARACTER = "forecast";
 
     @Inject
-    ForecastInfoPresenter ForecastInfoPresenter;
+    ForecastInfoPresenter forecastInfoPresenter;
+
     @BindView(R.id.info_description)
     TextView infoDescription;
+
     @BindView(R.id.info_title)
     TextView infoTitle;
 
@@ -50,29 +55,42 @@ public class ForecastInfoFragment extends BaseFragment implements ModelInfoView 
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.model_info, container, false);
+
+        ButterKnife.bind(this, view);
+
+        DaggerForecastInfoComponent.builder()
+                .infoPresenterModule(new InfoPresenterModule())
+                .build()
+                .inject(this);
+
         this.tag = String.valueOf(view.getTag());
+
         return view;
+
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ForecastInfoPresenter.onViewCreate();
-        ForecastInfoPresenter.setView(this);
+
+        forecastInfoPresenter.onViewCreate();
+        forecastInfoPresenter.setView(this);
 
         //Get character info
         if (getArguments() != null) {
             Forecast forecast = getMarvelCharacterFromArgs();
-            ForecastInfoPresenter.onCharacter(forecast);
+            forecastInfoPresenter.onCharacter(forecast);
         }
+
     }
 
     @Override
     public void showForecastInfo(ForecastInfoViewModel forecastInfoViewModel) {
 
         infoDescription.setText("Temperature: " + forecastInfoViewModel.getTemperature() + "\n\n" +
-                                "Main Weather: " + forecastInfoViewModel.getMainWeather() + "\n\n" +
+                                "MainScope Weather: " + forecastInfoViewModel.getMainWeather() + "\n\n" +
                                 "Atmospheric Pressure: " + forecastInfoViewModel.getPressure() + "\n\n" +
                                 "Humidity: " + forecastInfoViewModel.getHumidity() + "\n\n" +
                                 "Wind Speed: " + forecastInfoViewModel.getWindSpeed() + " km/h");

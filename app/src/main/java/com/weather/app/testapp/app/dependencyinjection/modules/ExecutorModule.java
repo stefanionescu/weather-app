@@ -1,30 +1,27 @@
-package com.weather.app.testapp.app.dependencyinjection;
+package com.weather.app.testapp.app.dependencyinjection.modules;
 
 import com.weather.app.testapp.executor.InteractorExecutor;
 import com.weather.app.testapp.executor.MainThreadExecutor;
 import com.weather.app.testapp.executor.MainThreadExecutorImp;
 import com.weather.app.testapp.executor.ThreadExecutor;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 
-@Module(
-        complete = false,
-        library = true
-)
+@Module
 public class ExecutorModule {
 
-
     @Provides
-    @Singleton
+    @Named("interactor_exec")
     public InteractorExecutor provideExecutor() {
         return new ThreadExecutor();
     }
 
     @Provides
-    @Singleton
+    @Named("main_exec")
     public MainThreadExecutor provideMainThreadExecutor() {
         return new MainThreadExecutorImp();
     }

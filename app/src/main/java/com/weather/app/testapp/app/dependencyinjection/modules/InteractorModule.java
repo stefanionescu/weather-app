@@ -1,5 +1,6 @@
-package com.weather.app.testapp.app.dependencyinjection;
+package com.weather.app.testapp.app.dependencyinjection.modules;
 
+import com.weather.app.testapp.app.dependencyinjection.scopes.ForecastListScope;
 import com.weather.app.testapp.domain.interactor.GetForecasts;
 import com.weather.app.testapp.domain.interactor.GetForecastsImp;
 import com.weather.app.testapp.domain.repository.ForecastRepository;
@@ -14,16 +15,13 @@ import dagger.Provides;
 /**
  * @author stefan
  */
-@Module(
-        complete = false,
-        library = true
-)
+@Module(includes = {ExecutorModule.class, RepositoryModule.class})
 public class InteractorModule {
 
     @Provides
-    public GetForecasts provideGetlondonForecastsLimit(InteractorExecutor interactorExecutor,
-                                                        MainThreadExecutor mainThreadExecutor,
-                                                        @Named("production_api") ForecastRepository forecastRepository) {
+    public GetForecasts provideGetlondonForecastsLimit(@Named("interactor_exec") InteractorExecutor interactorExecutor,
+                                                       @Named("main_exec") MainThreadExecutor mainThreadExecutor,
+                                                       @Named("production_api") ForecastRepository forecastRepository) {
 
         return new GetForecastsImp(interactorExecutor, mainThreadExecutor, forecastRepository);
 

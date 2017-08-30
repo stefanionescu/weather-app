@@ -1,10 +1,7 @@
 package com.weather.app.testapp.ui.presenter;
 
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.weather.app.testapp.app.BasePresenter;
 import com.weather.app.testapp.domain.LogUtils;
 import com.weather.app.testapp.domain.interactor.GetForecasts;
 import com.weather.app.testapp.domain.model.Forecast;
@@ -18,22 +15,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * @author stefan
  */
-public class ForecastListPresenterImp extends BasePresenter implements ForecastListPresenter {
+public class ForecastListPresenterImp implements ForecastListPresenter {
 
     private ForecastListView modelCollectionView;
     private GetForecasts getForecasts;
-    private ListOfForecasts marvelCharacterCollection;
-    private ForecastSelectedObservable forecastSelectedObservable;
-    private Context context;
+    private ListOfForecasts forecastCollection;
 
-    public ForecastListPresenterImp(Context context, GetForecasts getForecasts, ForecastSelectedObservable forecastSelectedObservable) {
-        super(context);
-        this.context = context;
+    @Inject
+    public ForecastListPresenterImp(GetForecasts getForecasts) {
         this.getForecasts = getForecasts;
-        this.forecastSelectedObservable = forecastSelectedObservable;
     }
 
     @Override
@@ -41,7 +36,7 @@ public class ForecastListPresenterImp extends BasePresenter implements ForecastL
 
         Log.i("initialize", "Initialized searching....");
 
-        marvelCharacterCollection = new ListOfForecasts();
+        forecastCollection = new ListOfForecasts();
         searchForCharacters();
 
     }
@@ -68,20 +63,20 @@ public class ForecastListPresenterImp extends BasePresenter implements ForecastL
 
     @Override
     public ListOfForecasts getParcelableCollection() {
-        return marvelCharacterCollection;
+        return forecastCollection;
     }
 
     @Override
     public void restoreParcelableCollection(ListOfForecasts londonForecasts) {
-        this.marvelCharacterCollection = londonForecasts;
+        this.forecastCollection = londonForecasts;
         modelCollectionView.add(convertToModelViewList(londonForecasts.getForecasts()));
     }
 
     @Override
     public void onforecastSelected(int position) {
-        Collection<Forecast> londonForecasts = marvelCharacterCollection.getForecasts();
-        Forecast marvelCharacter = (Forecast) londonForecasts.toArray()[position];
-        forecastSelectedObservable.notifyObservers(marvelCharacter);
+        Collection<Forecast> londonForecasts = forecastCollection.getForecasts();
+        Forecast forecast = (Forecast) londonForecasts.toArray()[position];
+        modelCollectionView.startInfoActivity(forecast);
     }
 
     private void searchForCharacters() {
@@ -92,7 +87,7 @@ public class ForecastListPresenterImp extends BasePresenter implements ForecastL
             @Override
             public void onMarvelCharacterList(List<Forecast> londonForecasts) {
 
-                marvelCharacterCollection.addAll(londonForecasts);
+                forecastCollection.addAll(londonForecasts);
                 modelCollectionView.add(convertToModelViewList(londonForecasts));
 
             }

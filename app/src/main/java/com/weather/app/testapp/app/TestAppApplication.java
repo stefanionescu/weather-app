@@ -5,23 +5,36 @@ import android.content.Context;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
-import com.weather.app.testapp.app.dependencyinjection.RootModule;
-
-import dagger.ObjectGraph;
+import com.weather.app.testapp.app.dependencyinjection.components.DaggerTestAppComponent;
+import com.weather.app.testapp.app.dependencyinjection.components.TestAppComponent;
+import com.weather.app.testapp.app.dependencyinjection.modules.RootModule;
 
 public class TestAppApplication extends Application {
 
-    private ObjectGraph objectGraph;
+    private static TestAppComponent component;
 
     public static TestAppApplication get(Context context) {
         return (TestAppApplication) context.getApplicationContext();
     }
 
+    public TestAppComponent getComponent() {
+        return component;
+    }
+
+    public static TestAppComponent getComponent( Context context ) {
+        return ((TestAppApplication)context.getApplicationContext()).getComponent();
+    }
+
     @Override
     public void onCreate() {
+
         super.onCreate();
-        objectGraph = ObjectGraph.create(new RootModule(this));
-        objectGraph.inject(this);
+
+        component = DaggerTestAppComponent.builder()
+                .rootModule(new RootModule(getApplicationContext()))
+                .build();
+
+        component.inject(this);
 
         setupLeakCanary();
 
@@ -34,11 +47,4 @@ public class TestAppApplication extends Application {
         return LeakCanary.install(this);
     }
 
-    public void inject(Object object) {
-        objectGraph.inject(object);
-    }
-
-    public void addModules(Object... modules) {
-        objectGraph.plus(modules);
-    }
 }

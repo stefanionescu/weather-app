@@ -1,5 +1,7 @@
 package com.weather.app.testapp.ui.fragment;
 
+import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -13,9 +15,16 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.weather.app.testapp.R;
-import com.weather.app.testapp.app.BaseFragment;
+import com.weather.app.testapp.app.TestAppApplication;
+import com.weather.app.testapp.app.dependencyinjection.components.DaggerForecastListComponent;
+import com.weather.app.testapp.app.dependencyinjection.modules.ExecutorModule;
+import com.weather.app.testapp.app.dependencyinjection.modules.InteractorModule;
+import com.weather.app.testapp.app.dependencyinjection.modules.ListPresenterModule;
+import com.weather.app.testapp.app.dependencyinjection.modules.RepositoryModule;
 import com.weather.app.testapp.domain.LogUtils;
+import com.weather.app.testapp.domain.model.Forecast;
 import com.weather.app.testapp.domain.model.ListOfForecasts;
+import com.weather.app.testapp.ui.activity.ModelInfoActivity;
 import com.weather.app.testapp.ui.adapter.ModelAdapter;
 import com.weather.app.testapp.ui.custom.recycler.ClickRecyclerView;
 import com.weather.app.testapp.ui.presenter.ForecastListPresenter;
@@ -29,16 +38,17 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * @author stefan
  */
-public class ForecastListFragment extends BaseFragment implements ForecastListView {
+public class ForecastListFragment extends Fragment implements ForecastListView {
 
     private static final String EXTRA_CHARACTER_COLLECTION = "extraCharacterCollection";
 
     @Inject
-    ForecastListPresenter characterCollectionPresenter;
+    ForecastListPresenter forecastCollectionPresenter;
 
     @BindView(R.id.collection_view)
     ClickRecyclerView collectionView;
@@ -56,19 +66,33 @@ public class ForecastListFragment extends BaseFragment implements ForecastListVi
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.forecast_list, container, false);
+
+        View view = inflater.inflate(R.layout.forecast_list, container, false);
+
+        ButterKnife.bind(this, view);
+
+        DaggerForecastListComponent.builder().
+                testAppComponent(((TestAppApplication)getActivity().getApplication()).getComponent())
+                .interactorModule(new InteractorModule())
+                .repositoryModule(new RepositoryModule())
+                .listPresenterModule(new ListPresenterModule())
+                .build()
+                .inject(this);
+
+        return view;
+
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initializeCollectionView();
-        characterCollectionPresenter.setView(this);
-        characterCollectionPresenter.onViewCreate();
+        forecastCollectionPresenter.setView(this);
+        forecastCollectionPresenter.onViewCreate();
 
         if (savedInstanceState == null) {
             Log.i("initialize", "First time running");
-            characterCollectionPresenter.initialize();
+            forecastCollectionPresenter.initialize();
         }
 
         addClickListenerToCharacterList();
@@ -82,7 +106,7 @@ public class ForecastListFragment extends BaseFragment implements ForecastListVi
         super.onSaveInstanceState(outState);
 
         //Get the actual state of the characters
-        ListOfForecasts londonForecasts = characterCollectionPresenter.getParcelableCollection();
+        ListOfForecasts londonForecasts = forecastCollectionPresenter.getParcelableCollection();
 
         //Parcel the object to be saved in the bundle
         Parcelable londonForecastsWrapped = Parcels.wrap(londonForecasts);
@@ -100,7 +124,7 @@ public class ForecastListFragment extends BaseFragment implements ForecastListVi
             //Get parcelable from bundle
             Parcelable londonForecastsWrapped = savedInstanceState.getParcelable(EXTRA_CHARACTER_COLLECTION);
             ListOfForecasts londonForecasts = Parcels.unwrap(londonForecastsWrapped);
-            characterCollectionPresenter.restoreParcelableCollection(londonForecasts);
+            forecastCollectionPresenter.restoreParcelableCollection(londonForecasts);
         }
     }
 
@@ -135,21 +159,30 @@ public class ForecastListFragment extends BaseFragment implements ForecastListVi
         Toast.makeText(this.getActivity(), getString(R.string.genericError), Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void startInfoActivity(Forecast forecast) {
+
+        launchForecastInfoActivity(forecast);
+
+    }
+
     private void addClickListenerToCharacterList() {
         collectionView.setOnItemClickListener(new CharacterClickListener());
     }
-
-    private void disableSearchOnFinish() {
-        collectionView.setOnScrollListener(null);
-    }
-
 
     private class CharacterClickListener implements ClickRecyclerView.OnItemClickListener {
 
         @Override
         public void onItemClick(RecyclerView parent, View view, int position, long id) {
-            characterCollectionPresenter.onforecastSelected(position);
+            forecastCollectionPresenter.onforecastSelected(position);
         }
+    }
+
+    private void launchForecastInfoActivity(Forecast forecast) {
+        Intent intent = new Intent(getActivity(), ModelInfoActivity.class);
+        Parcelable parcelable = Parcels.wrap(forecast);
+        intent.putExtra(ModelInfoActivity.KEY_CHARACTER, parcelable);
+        startActivity(intent);
     }
 
 }

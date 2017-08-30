@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 /**
- * Main Thread executor using the classic Looper.getMainLooper() from Android
+ * MainScope Thread executor using the classic Looper.getMainLooper() from Android
  *
  * @author stefan
  */

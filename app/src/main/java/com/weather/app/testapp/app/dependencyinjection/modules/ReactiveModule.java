@@ -1,5 +1,6 @@
-package com.weather.app.testapp.app.dependencyinjection;
+package com.weather.app.testapp.app.dependencyinjection.modules;
 
+import com.weather.app.testapp.app.dependencyinjection.scopes.MainScope;
 import com.weather.app.testapp.ui.reactive.ForecastSelectedObservable;
 
 import javax.inject.Singleton;
@@ -10,15 +11,11 @@ import dagger.Provides;
 /**
  * @author stefan
  */
-@Module(
-        complete = false,
-        library = true
-)
+@Module
 public class ReactiveModule {
 
-    @Singleton
     @Provides
-    ForecastSelectedObservable proviForecastSelectedObservable() {
+    public ForecastSelectedObservable proviForecastSelectedObservable() {
         return new ForecastSelectedObservable();
     }
 }
