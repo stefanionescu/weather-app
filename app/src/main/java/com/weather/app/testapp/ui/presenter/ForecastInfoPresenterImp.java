@@ -1,6 +1,5 @@
 package com.weather.app.testapp.ui.presenter;
 
-import com.weather.app.testapp.domain.model.Forecast;
 import com.weather.app.testapp.ui.view.ModelInfoView;
 import com.weather.app.testapp.ui.viewmodel.ForecastInfoViewModel;
 
@@ -38,11 +37,6 @@ public class ForecastInfoPresenterImp implements ForecastInfoPresenter {
     @Override
     public void onViewDestroy() {
         //Do nothing
-    }
-
-    @Override
-    public void setView(ModelInfoView view) {
-
     }
 
     @Override

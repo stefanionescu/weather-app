@@ -10,7 +10,7 @@ public interface GetForecasts {
 
     interface Callback {
 
-        void onMarvelCharacterList(List<Forecast> forecasts);
+        void onForecastList(List<Forecast> forecasts);
 
         void onError();
     }

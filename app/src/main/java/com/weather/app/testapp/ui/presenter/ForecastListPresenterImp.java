@@ -6,6 +6,7 @@ import com.weather.app.testapp.domain.LogUtils;
 import com.weather.app.testapp.domain.interactor.GetForecasts;
 import com.weather.app.testapp.domain.model.Forecast;
 import com.weather.app.testapp.domain.model.ListOfForecasts;
+import com.weather.app.testapp.ui.utils.ConvertToModel;
 import com.weather.app.testapp.ui.view.ForecastListView;
 import com.weather.app.testapp.ui.viewmodel.ForecastViewModel;
 import com.weather.app.testapp.ui.viewmodel.Model;
@@ -24,16 +25,20 @@ public class ForecastListPresenterImp implements ForecastListPresenter {
     private ForecastListView modelCollectionView;
     private GetForecasts getForecasts;
     private ListOfForecasts forecastCollection;
+    private ConvertToModel convertToModel;
 
     @Inject
-    public ForecastListPresenterImp(GetForecasts getForecasts) {
+    public ForecastListPresenterImp(GetForecasts getForecasts, ForecastListView modelCollectionView) {
+
         this.getForecasts = getForecasts;
+        this.modelCollectionView = modelCollectionView;
+
+        convertToModel = new ConvertToModel();
+
     }
 
     @Override
     public void initialize() {
-
-        Log.i("initialize", "Initialized searching....");
 
         forecastCollection = new ListOfForecasts();
         searchForCharacters();
@@ -56,23 +61,18 @@ public class ForecastListPresenterImp implements ForecastListPresenter {
     }
 
     @Override
-    public void setView(ForecastListView view) {
-        this.modelCollectionView = view;
-    }
-
-    @Override
     public ListOfForecasts getParcelableCollection() {
         return forecastCollection;
     }
 
     @Override
-    public void restoreParcelableCollection(ListOfForecasts londonForecasts) {
-        this.forecastCollection = londonForecasts;
-        modelCollectionView.add(convertToModelViewList(londonForecasts.getForecasts()));
+    public void restoreParcelableCollection(List<Model> models, ListOfForecasts forecastCollection) {
+        this.forecastCollection = forecastCollection;
+        modelCollectionView.add(models);
     }
 
     @Override
-    public void onforecastSelected(int position) {
+    public void onForecastSelected(int position) {
         Collection<Forecast> londonForecasts = forecastCollection.getForecasts();
         Forecast forecast = (Forecast) londonForecasts.toArray()[position];
         modelCollectionView.startInfoActivity(forecast);
@@ -80,14 +80,12 @@ public class ForecastListPresenterImp implements ForecastListPresenter {
 
     private void searchForCharacters() {
 
-        Log.i("searchForecasts", "Getting forecasts....");
-
         getForecasts.execute(new GetForecasts.Callback() {
             @Override
-            public void onMarvelCharacterList(List<Forecast> londonForecasts) {
+            public void onForecastList(List<Forecast> londonForecasts) {
 
                 forecastCollection.addAll(londonForecasts);
-                modelCollectionView.add(convertToModelViewList(londonForecasts));
+                modelCollectionView.add(convertToModel.convertToModelViewList(londonForecasts));
 
             }
 
@@ -99,15 +97,5 @@ public class ForecastListPresenterImp implements ForecastListPresenter {
         });
     }
 
-    private List<Model> convertToModelViewList(List<Forecast> londonForecasts) {
-
-        List<Model> modelList = new ArrayList<Model>();
-
-        for (Forecast marvelCharacter : londonForecasts) {
-            modelList.add(new ForecastViewModel(marvelCharacter));
-        }
-
-        return modelList;
-    }
 
 }

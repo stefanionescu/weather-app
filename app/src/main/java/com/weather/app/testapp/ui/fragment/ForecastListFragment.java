@@ -28,6 +28,7 @@ import com.weather.app.testapp.ui.activity.ModelInfoActivity;
 import com.weather.app.testapp.ui.adapter.ModelAdapter;
 import com.weather.app.testapp.ui.custom.recycler.ClickRecyclerView;
 import com.weather.app.testapp.ui.presenter.ForecastListPresenter;
+import com.weather.app.testapp.ui.utils.ConvertToModel;
 import com.weather.app.testapp.ui.view.ForecastListView;
 import com.weather.app.testapp.ui.viewmodel.Model;
 
@@ -75,7 +76,7 @@ public class ForecastListFragment extends Fragment implements ForecastListView {
                 testAppComponent(((TestAppApplication)getActivity().getApplication()).getComponent())
                 .interactorModule(new InteractorModule())
                 .repositoryModule(new RepositoryModule())
-                .listPresenterModule(new ListPresenterModule())
+                .listPresenterModule(new ListPresenterModule(this))
                 .build()
                 .inject(this);
 
@@ -87,7 +88,7 @@ public class ForecastListFragment extends Fragment implements ForecastListView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initializeCollectionView();
-        forecastCollectionPresenter.setView(this);
+
         forecastCollectionPresenter.onViewCreate();
 
         if (savedInstanceState == null) {
@@ -120,11 +121,17 @@ public class ForecastListFragment extends Fragment implements ForecastListView {
         super.onViewStateRestored(savedInstanceState);
 
         if (savedInstanceState != null) {
-            Log.i(LogUtils.generateTag(this), "onViewStateRestored");
-            //Get parcelable from bundle
+
             Parcelable londonForecastsWrapped = savedInstanceState.getParcelable(EXTRA_CHARACTER_COLLECTION);
             ListOfForecasts londonForecasts = Parcels.unwrap(londonForecastsWrapped);
-            forecastCollectionPresenter.restoreParcelableCollection(londonForecasts);
+
+            ConvertToModel convertToModel = new ConvertToModel();
+
+            forecastCollectionPresenter.
+                    restoreParcelableCollection
+                            (convertToModel.convertToModelViewList(londonForecasts.getForecasts()),
+                                    londonForecasts);
+
         }
     }
 
@@ -174,7 +181,7 @@ public class ForecastListFragment extends Fragment implements ForecastListView {
 
         @Override
         public void onItemClick(RecyclerView parent, View view, int position, long id) {
-            forecastCollectionPresenter.onforecastSelected(position);
+            forecastCollectionPresenter.onForecastSelected(position);
         }
     }
 

@@ -33,7 +33,7 @@ public class GetForecastsImp extends AbstractInteractor implements GetForecasts 
             getMainThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
-                    callback.onMarvelCharacterList(forecasts);
+                    callback.onForecastList(forecasts);
                 }
             });
 
